@@ -23,14 +23,10 @@ const CONTAINER_STYLE: React.CSSProperties = {
   width: 320,
 };
 
-const CONTENT_STYLE: React.CSSProperties = {
-  display: 'flex',
-  alignItems: 'center',
-  justifyContent: 'center',
-  borderRadius: 'var(--crm-ui-kit-border-radius-default)',
-  background:
-    'linear-gradient(135deg, var(--crm-ui-kit-palette-active-element-900), var(--crm-ui-kit-palette-border-default))',
-  color: 'var(--crm-ui-kit-color-white)',
+const IMAGE_STYLE: React.CSSProperties = {
+  width: '100%',
+  height: '100%',
+  objectFit: 'cover',
 };
 
 const meta = {
@@ -49,12 +45,12 @@ const meta = {
   },
   args: {
     ratio: 16 / 9,
-    children: 'Content',
+    children: <img src="/img/forest.jpg" alt="Forest" style={IMAGE_STYLE} />,
   },
   render: (props) => {
     return (
       <div style={CONTAINER_STYLE}>
-        <AspectRatio {...props} style={CONTENT_STYLE} />
+        <AspectRatio {...props} />
       </div>
     );
   },
