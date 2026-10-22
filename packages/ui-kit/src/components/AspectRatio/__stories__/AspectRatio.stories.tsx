@@ -49,6 +49,7 @@ const meta = {
   },
   args: {
     ratio: 16 / 9,
+    children: 'Content',
   },
   render: (props) => {
     return (

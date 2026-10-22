@@ -38,7 +38,9 @@ describe('AspectRatio', () => {
         className="my-class"
         style={{ color: 'red' }}
         data-testid={DATA_COMPONENT_TEST_ID}
-      />
+      >
+        Content
+      </AspectRatio>
     );
 
     const element = screen.getByTestId(DATA_COMPONENT_TEST_ID);
@@ -50,7 +52,9 @@ describe('AspectRatio', () => {
   });
 
   it('should keep a square ratio by default', () => {
-    render(<AspectRatio data-testid={DATA_COMPONENT_TEST_ID} />);
+    render(
+      <AspectRatio data-testid={DATA_COMPONENT_TEST_ID}>Content</AspectRatio>
+    );
 
     expect(
       getWrapper(screen.getByTestId(DATA_COMPONENT_TEST_ID))?.style
@@ -59,7 +63,11 @@ describe('AspectRatio', () => {
   });
 
   it('should keep the passed ratio', () => {
-    render(<AspectRatio ratio={16 / 9} data-testid={DATA_COMPONENT_TEST_ID} />);
+    render(
+      <AspectRatio ratio={16 / 9} data-testid={DATA_COMPONENT_TEST_ID}>
+        Content
+      </AspectRatio>
+    );
 
     expect(
       getWrapper(screen.getByTestId(DATA_COMPONENT_TEST_ID))?.style
