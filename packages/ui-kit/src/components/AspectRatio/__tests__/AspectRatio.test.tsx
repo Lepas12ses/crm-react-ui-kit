@@ -9,7 +9,7 @@ const DATA_COMPONENT_TEST_ID = 'AspectRatio';
 const DATA_CHILDREN_TEST_ID = 'AspectRatioChildren';
 
 const getWrapper = (element: HTMLElement) => {
-  return element.parentElement;
+  return element.closest<HTMLElement>('[data-radix-aspect-ratio-wrapper]');
 };
 
 describe('AspectRatio', () => {

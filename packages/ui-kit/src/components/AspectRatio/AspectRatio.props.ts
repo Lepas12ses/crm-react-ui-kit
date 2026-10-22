@@ -1,6 +1,8 @@
 import React from 'react';
+import { type AspectRatioProps as RadixAspectRatioProps } from '@radix-ui/react-aspect-ratio';
 
-export interface AspectRatioProps extends React.HTMLAttributes<HTMLDivElement> {
+export interface AspectRatioProps
+  extends Omit<RadixAspectRatioProps, 'children'> {
   /**
    * Width to height ratio, e.g. `16 / 9`.
    *
