@@ -4,7 +4,8 @@ import { type AspectRatioProps as RadixAspectRatioProps } from '@radix-ui/react-
 export interface AspectRatioProps
   extends Omit<RadixAspectRatioProps, 'children'> {
   /**
-   * Width to height ratio, e.g. `16 / 9`.
+   * Width to height ratio, e.g. `16 / 9`. Must be a positive finite
+   * number, otherwise the default is used.
    *
    * @default 1
    */

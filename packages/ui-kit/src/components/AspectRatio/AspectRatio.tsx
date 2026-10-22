@@ -3,6 +3,8 @@ import { Root as RadixAspectRatioRoot } from '@radix-ui/react-aspect-ratio';
 
 import { type AspectRatioProps } from './AspectRatio.props';
 
+const DEFAULT_RATIO = 1;
+
 /**
  * Keeps the given width to height ratio. Renders a sizing wrapper and
  * the content element inside it: all props, including `ref`, go to the
@@ -13,7 +15,12 @@ import { type AspectRatioProps } from './AspectRatio.props';
  */
 export const AspectRatio = forwardRef<HTMLDivElement, AspectRatioProps>(
   (props, ref) => {
-    return <RadixAspectRatioRoot ref={ref} {...props} />;
+    const { ratio = DEFAULT_RATIO, ...rest } = props;
+
+    const safeRatio =
+      Number.isFinite(ratio) && ratio > 0 ? ratio : DEFAULT_RATIO;
+
+    return <RadixAspectRatioRoot ref={ref} ratio={safeRatio} {...rest} />;
   }
 );
 

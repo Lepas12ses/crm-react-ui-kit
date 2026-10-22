@@ -75,6 +75,22 @@ describe('AspectRatio', () => {
     ).toBe('56.25%');
   });
 
+  it.each([0, -1, NaN, Infinity])(
+    'should fall back to a square ratio for invalid ratio %p',
+    (ratio) => {
+      render(
+        <AspectRatio ratio={ratio} data-testid={DATA_COMPONENT_TEST_ID}>
+          Content
+        </AspectRatio>
+      );
+
+      expect(
+        getWrapper(screen.getByTestId(DATA_COMPONENT_TEST_ID))?.style
+          .paddingBottom
+      ).toBe('100%');
+    }
+  );
+
   it('should render the child element as the content element with asChild', () => {
     render(
       <AspectRatio asChild className="ratio-class" style={{ color: 'red' }}>
