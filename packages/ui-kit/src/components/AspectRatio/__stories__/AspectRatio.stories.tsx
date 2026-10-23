@@ -30,6 +30,15 @@ const IMAGE_STYLE: React.CSSProperties = {
   objectFit: 'cover',
 };
 
+const RATIO_OPTIONS = [1, 4 / 3, 16 / 9, 9 / 16];
+
+const RATIO_LABELS: Record<number, string> = {
+  [1]: '1:1',
+  [4 / 3]: '4:3',
+  [16 / 9]: '16:9',
+  [9 / 16]: '9:16',
+};
+
 const meta = {
   title: 'Components/AspectRatio',
   parameters: {
@@ -40,7 +49,10 @@ const meta = {
   },
   component: AspectRatio,
   argTypes: {
-    ratio: { control: { type: 'number', min: 0.1, step: 0.1 } },
+    ratio: {
+      options: RATIO_OPTIONS,
+      control: { type: 'select', labels: RATIO_LABELS },
+    },
     asChild: { control: false },
     children: { control: false },
   },
