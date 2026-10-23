@@ -25,9 +25,19 @@ test.describe('AspectRatio ratio', () => {
     test(
       prettyProps(props),
       async ({ mount, appearance, expectScreenshotClippedToContent }) => {
-        await mount(
+        const component = await mount(
           <AspectRatioPlaygroundItem appearance={appearance} props={props} />
         );
+
+        /**
+         * The screenshot helper waits only for fonts, so without this the image
+         * may still be loading when the screenshot is taken. `decode()` also
+         * rejects on a missing file, failing the test instead of capturing
+         * an empty block.
+         */
+        await component
+          .locator('img')
+          .evaluate((img: HTMLImageElement) => img.decode());
         await expectScreenshotClippedToContent();
       }
     );

@@ -1,5 +1,7 @@
 import React from 'react';
 
+import forestImage from '@storybook-utils/img/forest.jpg';
+
 import {
   ComponentPlayground,
   ComponentPlaygroundProps,
@@ -12,8 +14,10 @@ const CONTAINER_STYLE: React.CSSProperties = {
   outline: '1px dashed #c5c5c5',
 };
 
-const CONTENT_STYLE: React.CSSProperties = {
-  background: '#4c8bf7',
+const IMAGE_STYLE: React.CSSProperties = {
+  width: '100%',
+  height: '100%',
+  objectFit: 'cover',
 };
 
 export const AspectRatioPlaygroundItem = ({
@@ -28,7 +32,9 @@ export const AspectRatioPlaygroundItem = ({
       {(p) => {
         return (
           <div style={CONTAINER_STYLE}>
-            <AspectRatio {...p} style={CONTENT_STYLE} />
+            <AspectRatio {...p}>
+              <img src={forestImage} alt="Forest" style={IMAGE_STYLE} />
+            </AspectRatio>
           </div>
         );
       }}
