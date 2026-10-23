@@ -14,6 +14,8 @@ export interface AspectRatioProps
    * Renders the single child element as the content element instead of
    * its own one. Classes, `style`, handlers and `ref` are merged with
    * the child's ones. `children` must be a single React element.
+   * `ref` is typed as `HTMLDivElement` but points to the child element,
+   * e.g. `HTMLImageElement` for `<img>`.
    *
    * @default false
    */
