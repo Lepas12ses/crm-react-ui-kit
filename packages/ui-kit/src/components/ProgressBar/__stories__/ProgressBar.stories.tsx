@@ -66,13 +66,12 @@ const meta = {
     asChild: { control: false },
   },
   args: {
-    'theme': ProgressBarPrimaryTheme,
-    'value': 42,
-    'max': 100,
-    'aria-label': 'Progress',
+    theme: ProgressBarPrimaryTheme,
+    value: 42,
+    max: 100,
   },
   render: (props) => (
-    <ProgressBar.Root {...props}>
+    <ProgressBar.Root aria-label="Progress" {...props}>
       <ProgressBar.Indicator />
     </ProgressBar.Root>
   ),
