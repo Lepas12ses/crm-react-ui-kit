@@ -16,9 +16,6 @@ export interface ProgressBarRootProps
   /**
    * Progress in percent. Values outside 0..100 are clamped,
    * `NaN` is treated as 0.
-   *
-   * Pass `aria-label` or `aria-labelledby` so assistive technologies
-   * can announce the progress bar.
    */
   value: number;
   /**
