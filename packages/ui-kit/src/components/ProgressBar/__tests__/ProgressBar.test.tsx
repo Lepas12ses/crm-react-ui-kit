@@ -102,6 +102,55 @@ describe('ProgressBar', () => {
     consoleErrorSpy.mockRestore();
   });
 
+  it('should count progress from max', () => {
+    renderProgressBar({ value: 3, max: 10 });
+
+    const element = screen.getByRole('progressbar');
+
+    expect(element).toHaveAttribute('aria-valuemax', '10');
+    expect(element).toHaveAttribute('aria-valuenow', '3');
+    expect(element).toHaveAttribute('aria-valuetext', '30%');
+    expect(getValueVariable()).toBe('30%');
+  });
+
+  it('should clamp value to max', () => {
+    renderProgressBar({ value: 15, max: 10 });
+
+    const element = screen.getByRole('progressbar');
+
+    expect(element).toHaveAttribute('aria-valuenow', '10');
+    expect(element).toHaveAttribute('data-state', 'complete');
+    expect(getValueVariable()).toBe('100%');
+  });
+
+  it.each([0, -5, NaN])('should throw for invalid max %p', (max) => {
+    /**
+     * React logs the error thrown during render on its own.
+     */
+    const consoleErrorSpy = jest
+      .spyOn(console, 'error')
+      .mockImplementation(() => undefined);
+
+    expect(() => renderProgressBar({ value: 50, max })).toThrow(
+      `\`ProgressBar.Root\` expects \`max\` to be a positive number, got \`${max}\``
+    );
+
+    consoleErrorSpy.mockRestore();
+  });
+
+  it('should use getValueLabel for aria-valuetext', () => {
+    renderProgressBar({
+      value: 3,
+      max: 10,
+      getValueLabel: (value, max) => `${value} of ${max}`,
+    });
+
+    expect(screen.getByRole('progressbar')).toHaveAttribute(
+      'aria-valuetext',
+      '3 of 10'
+    );
+  });
+
   it('should forward ref to the root element', () => {
     const ref = React.createRef<HTMLDivElement>();
 

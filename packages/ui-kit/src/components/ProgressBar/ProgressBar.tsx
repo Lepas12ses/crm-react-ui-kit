@@ -14,37 +14,61 @@ import s from './ProgressBar.module.css';
 
 type El = HTMLDivElement;
 
+const DISPLAY_NAME = 'ProgressBar.Root';
+
 const MIN_VALUE = 0;
-const MAX_VALUE = 100;
+const DEFAULT_MAX = 100;
+
+const isValidMax = (max: number): boolean => !Number.isNaN(max) && max > 0;
 
 /**
  * Radix turns an out-of-range value into the indeterminate state
  * and logs an error, while consumers pass raw ratios like `used / 0`.
  */
-const clampValue = (value: number): number => {
+const clampValue = (value: number, max: number): number => {
   if (Number.isNaN(value)) {
     return MIN_VALUE;
   }
 
-  return Math.min(Math.max(value, MIN_VALUE), MAX_VALUE);
+  return Math.min(Math.max(value, MIN_VALUE), max);
 };
 
 const Root = forwardRef<El, ProgressBarRootProps>((props, ref) => {
-  const { className = '', theme, value, style, children, ...rest } = props;
+  const {
+    className = '',
+    theme,
+    value,
+    max = DEFAULT_MAX,
+    style,
+    children,
+    ...rest
+  } = props;
 
   const themeClassName = useThemeClassName<ProgressBarTheme>(theme);
 
-  const clampedValue = clampValue(value);
+  /**
+   * Throw instead of falling back like Radix: its fallback only logs
+   * to the console, which is easy to miss, and depends on the Radix default.
+   */
+  if (!isValidMax(max)) {
+    throw new Error(
+      `\`${DISPLAY_NAME}\` expects \`max\` to be a positive number, got \`${max}\``
+    );
+  }
+
+  const clampedValue = clampValue(value, max);
 
   const valueStyle: CrmUiKitCSSProperties = {
-    '--crm-ui-kit-progress-bar-indicator-width': `${clampedValue}%`,
+    '--crm-ui-kit-progress-bar-indicator-width': `${
+      (clampedValue / max) * 100
+    }%`,
   };
 
   return (
     <RadixProgressRoot
       ref={ref}
       value={clampedValue}
-      max={MAX_VALUE}
+      max={max}
       className={cx(s.progress_bar, themeClassName, className)}
       style={{ ...valueStyle, ...style }}
       {...rest}
@@ -54,7 +78,7 @@ const Root = forwardRef<El, ProgressBarRootProps>((props, ref) => {
   );
 });
 
-Root.displayName = 'ProgressBar.Root';
+Root.displayName = DISPLAY_NAME;
 
 export const ProgressBar = {
   Root,

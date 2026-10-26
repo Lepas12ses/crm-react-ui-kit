@@ -56,14 +56,19 @@ const meta = {
       mapping: themeMap,
     },
     value: {
-      control: { type: 'range', min: 0, max: 100, step: 1 },
+      control: { type: 'range', min: 0, max: 200, step: 1 },
     },
+    max: {
+      control: { type: 'range', min: 1, max: 200, step: 1 },
+    },
+    getValueLabel: { control: false },
     children: { table: { disable: true } },
     asChild: { control: false },
   },
   args: {
     'theme': ProgressBarPrimaryTheme,
     'value': 42,
+    'max': 100,
     'aria-label': 'Progress',
   },
   render: (props) => (
