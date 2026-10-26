@@ -26,7 +26,7 @@ const renderProgressBar = (
 const getValueVariable = () =>
   screen
     .getByRole('progressbar')
-    .style.getPropertyValue('--crm-ui-kit-progress-bar-value');
+    .style.getPropertyValue('--crm-ui-kit-progress-bar-indicator-width');
 
 describe('ProgressBar', () => {
   it('should be defined', () => {

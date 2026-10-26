@@ -37,7 +37,7 @@ const Root = forwardRef<El, ProgressBarRootProps>((props, ref) => {
   const clampedValue = clampValue(value);
 
   const valueStyle: CrmUiKitCSSProperties = {
-    '--crm-ui-kit-progress-bar-value': `${clampedValue}%`,
+    '--crm-ui-kit-progress-bar-indicator-width': `${clampedValue}%`,
   };
 
   return (

@@ -3,5 +3,5 @@
   width: 100%;
   height: var(--crm-ui-kit-progress-bar-height);
   border-radius: var(--crm-ui-kit-progress-bar-border-radius);
-  background-color: var(--crm-ui-kit-progress-bar-track-color);
+  background-color: var(--crm-ui-kit-progress-bar-background-color);
 }
