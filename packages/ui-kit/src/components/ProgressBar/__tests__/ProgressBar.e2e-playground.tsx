@@ -12,6 +12,12 @@ import {
   type ProgressBarTheme,
 } from '..';
 
+const CONTAINER_STYLE: React.CSSProperties = {
+  width: 200,
+  padding: 16,
+  background: '#c5c5c5',
+};
+
 const createPlaygroundItem = (theme: ProgressBarTheme) => {
   const PlaygroundItem = ({
     appearance,
@@ -22,7 +28,7 @@ const createPlaygroundItem = (theme: ProgressBarTheme) => {
       props={props}
     >
       {(p) => (
-        <div style={{ width: 200 }}>
+        <div style={CONTAINER_STYLE}>
           <ProgressBar.Root {...p} theme={theme}>
             <ProgressBar.Indicator />
           </ProgressBar.Root>

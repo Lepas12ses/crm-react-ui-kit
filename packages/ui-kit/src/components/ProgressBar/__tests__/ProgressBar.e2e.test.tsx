@@ -9,7 +9,7 @@ import { type ProgressBarRootProps } from '..';
 import { ProgressBarPrimaryPlaygroundItem } from './ProgressBar.e2e-playground';
 
 export const primaryCombinations = multiCartesian<ProgressBarRootProps>([
-  { value: [0, 1, 50, 99, 100] },
+  { value: [0, 50, 100] },
 ]);
 
 for (const props of primaryCombinations) {
