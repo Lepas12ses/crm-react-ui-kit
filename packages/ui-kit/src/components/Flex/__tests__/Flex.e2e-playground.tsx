@@ -30,6 +30,10 @@ const WRAP_CONTAINER_STYLE: React.CSSProperties = {
   outline: '1px dashed var(--crm-ui-kit-palette-border-default)',
 };
 
+const DISPLAY_CONTAINER_STYLE: React.CSSProperties = {
+  outline: '1px dashed var(--crm-ui-kit-palette-border-default)',
+};
+
 export const FlexPlaygroundItem = ({
   appearance,
   props,
@@ -43,6 +47,27 @@ export const FlexPlaygroundItem = ({
           </div>
         ))}
       </Flex>
+    )}
+  </ComponentPlayground>
+);
+
+export const FlexDisplayPlaygroundItem = ({
+  appearance,
+  props,
+}: ComponentPlaygroundProps<FlexProps>) => (
+  <ComponentPlayground<FlexProps> appearance={appearance} props={props}>
+    {(p) => (
+      <div>
+        Before
+        <Flex {...p} style={DISPLAY_CONTAINER_STYLE}>
+          {ITEMS.map(({ height }, index) => (
+            <div key={index} style={{ ...ITEM_STYLE, height }}>
+              {index + 1}
+            </div>
+          ))}
+        </Flex>
+        After
+      </div>
     )}
   </ComponentPlayground>
 );

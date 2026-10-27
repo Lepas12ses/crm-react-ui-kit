@@ -9,12 +9,17 @@ import { Platform } from '@ui-kit/lib/platform';
 import { type FlexProps } from '..';
 
 import {
+  FlexDisplayPlaygroundItem,
   FlexPlaygroundItem,
   FlexWrapPlaygroundItem,
 } from './Flex.e2e-playground';
 
+const displayCombinations = multiCartesian<FlexProps>([
+  { display: ['flex', 'inline-flex'] },
+]);
+
 const directionCombinations = multiCartesian<FlexProps>([
-  { direction: ['row', 'column'] },
+  { direction: ['row', 'column', 'row-reverse', 'column-reverse'] },
 ]);
 
 const alignCombinations = multiCartesian<FlexProps>([
@@ -28,7 +33,7 @@ const justifyCombinations = multiCartesian<FlexProps>([
 const gapCombinations = multiCartesian<FlexProps>([{ gap: ['2'] }]);
 
 const wrapCombinations = multiCartesian<FlexProps>([
-  { wrap: ['wrap', 'wrap-reverse'], gapX: ['1'], gapY: ['4'] },
+  { wrap: ['nowrap', 'wrap', 'wrap-reverse'], gapX: ['1'], gapY: ['4'] },
 ]);
 
 test.skip(
@@ -38,6 +43,20 @@ test.skip(
     browserName !== 'chromium',
   'Flex is a plain CSS flex wrapper with no theme or platform-specific styles'
 );
+
+test.describe('Flex display', () => {
+  for (const props of displayCombinations) {
+    test(
+      prettyProps(props),
+      async ({ mount, appearance, expectScreenshotClippedToContent }) => {
+        await mount(
+          <FlexDisplayPlaygroundItem appearance={appearance} props={props} />
+        );
+        await expectScreenshotClippedToContent();
+      }
+    );
+  }
+});
 
 test.describe('Flex direction', () => {
   for (const props of directionCombinations) {
