@@ -1,7 +1,7 @@
 import React, { forwardRef } from 'react';
 import { Slot } from '@radix-ui/react-slot';
 
-import { spacing } from '@ui-kit/lib/spacing';
+import { SPACING_SCALE } from '@ui-kit/lib/spacing';
 
 import { type FlexProps } from './Flex.props';
 import { type FlexAlign, type FlexJustify } from './Flex.types';
@@ -47,8 +47,8 @@ export const Flex = forwardRef<HTMLDivElement, FlexProps>((props, ref) => {
     alignItems: align && alignValue[align],
     justifyContent: justify && justifyValue[justify],
     flexWrap: wrap,
-    columnGap: gapX && spacing[gapX],
-    rowGap: gapY && spacing[gapY],
+    columnGap: gapX && SPACING_SCALE[gapX],
+    rowGap: gapY && SPACING_SCALE[gapY],
     ...style,
   };
 

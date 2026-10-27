@@ -1,9 +1,7 @@
-import { type SpacingScale } from './type';
-
 /**
- * Spacing value by its key, e.g. `spacing['4']` → `16px`.
+ * Spacing value by its key, e.g. `SPACING_SCALE['4']` → `16px`.
  */
-export const spacing: SpacingScale = {
+export const SPACING_SCALE = {
   '0': '0',
   'px': '1px',
   '0-5': '2px',
@@ -41,4 +39,4 @@ export const spacing: SpacingScale = {
   '75': '300px',
   '80': '320px',
   '96': '384px',
-};
+} as const;

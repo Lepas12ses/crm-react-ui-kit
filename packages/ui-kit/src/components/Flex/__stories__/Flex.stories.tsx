@@ -3,7 +3,7 @@ import type { Meta, StoryObj } from '@storybook/react';
 
 import { CanvasCentered } from '@storybook-utils/constants';
 
-import { spacing } from '@ui-kit/lib/spacing';
+import { SPACING_SCALE } from '@ui-kit/lib/spacing';
 
 import { Flex } from '..';
 
@@ -84,9 +84,9 @@ const meta = {
       options: ['start', 'center', 'end', 'between'],
     },
     wrap: { control: 'select', options: ['nowrap', 'wrap', 'wrap-reverse'] },
-    gap: { control: 'select', options: Object.keys(spacing) },
-    gapX: { control: 'select', options: Object.keys(spacing) },
-    gapY: { control: 'select', options: Object.keys(spacing) },
+    gap: { control: 'select', options: Object.keys(SPACING_SCALE) },
+    gapX: { control: 'select', options: Object.keys(SPACING_SCALE) },
+    gapY: { control: 'select', options: Object.keys(SPACING_SCALE) },
   },
   args: {
     wrap: 'wrap',

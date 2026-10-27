@@ -1,2 +1,2 @@
 export { type Spacing } from './type';
-export { spacing } from './spacing';
+export { SPACING_SCALE } from './spacing';
