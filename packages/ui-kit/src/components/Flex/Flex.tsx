@@ -4,14 +4,14 @@ import { Slot } from '@radix-ui/react-slot';
 
 import { spacing } from '@ui-kit/lib/spacing';
 
+import { type FlexProps } from './Flex.props';
 import {
   type FlexAlign,
   type FlexDirection,
   type FlexDisplay,
   type FlexJustify,
-  type FlexProps,
   type FlexWrap,
-} from './Flex.props';
+} from './Flex.types';
 
 import s from './Flex.module.css';
 
