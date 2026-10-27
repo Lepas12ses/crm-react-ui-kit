@@ -22,6 +22,8 @@ interface FlexOwnProps {
   asChild?: boolean;
   /**
    * CSS `display` of the container.
+   *
+   * @default flex
    */
   display?: FlexDisplay;
   /**

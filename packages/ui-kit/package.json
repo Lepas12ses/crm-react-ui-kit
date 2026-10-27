@@ -59,7 +59,6 @@
     "./assets/Badge.css": "./dist/assets/Badge.css",
     "./assets/Separator.css": "./dist/assets/Separator.css",
     "./assets/Ribbon.css": "./dist/assets/Ribbon.css",
-    "./assets/Flex.css": "./dist/assets/Flex.css",
     "./assets/theme.css": "./dist/assets/theme.css",
     "./assets/icons.css": "./dist/assets/icons.css"
   },

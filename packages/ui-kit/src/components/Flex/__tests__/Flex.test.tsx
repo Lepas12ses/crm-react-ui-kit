@@ -16,9 +16,9 @@ const renderFlex = (props?: Partial<FlexProps>) =>
     </Flex>
   );
 
-const getGapVars = (element: HTMLElement) => ({
-  x: element.style.getPropertyValue('--crm-ui-kit-flex-gap-x'),
-  y: element.style.getPropertyValue('--crm-ui-kit-flex-gap-y'),
+const getGaps = (element: HTMLElement) => ({
+  x: element.style.columnGap,
+  y: element.style.rowGap,
 });
 
 describe('Flex', () => {
@@ -26,13 +26,10 @@ describe('Flex', () => {
     expect(Flex).toBeDefined();
   });
 
-  it('should add className to Flex classes', () => {
+  it('should pass className to the root element', () => {
     renderFlex({ className: 'my-class' });
 
-    expect(screen.getByTestId(DATA_COMPONENT_TEST_ID)).toHaveClass(
-      'flex',
-      'my-class'
-    );
+    expect(screen.getByTestId(DATA_COMPONENT_TEST_ID)).toHaveClass('my-class');
   });
 
   it('should render children', () => {
@@ -87,27 +84,25 @@ describe('Flex', () => {
     it('should not set gaps when gap props are not passed', () => {
       renderFlex();
 
-      const element = screen.getByTestId(DATA_COMPONENT_TEST_ID);
-
-      expect(getGapVars(element)).toEqual({ x: '', y: '' });
-      expect(element).not.toHaveClass('gap_x');
-      expect(element).not.toHaveClass('gap_y');
+      expect(getGaps(screen.getByTestId(DATA_COMPONENT_TEST_ID))).toEqual({
+        x: '',
+        y: '',
+      });
     });
 
     it('should set only the passed axis', () => {
       renderFlex({ gapX: '1' });
 
-      const element = screen.getByTestId(DATA_COMPONENT_TEST_ID);
-
-      expect(getGapVars(element)).toEqual({ x: '4px', y: '' });
-      expect(element).toHaveClass('gap_x');
-      expect(element).not.toHaveClass('gap_y');
+      expect(getGaps(screen.getByTestId(DATA_COMPONENT_TEST_ID))).toEqual({
+        x: '4px',
+        y: '',
+      });
     });
 
     it('should set both gaps from gap', () => {
       renderFlex({ gap: '4' });
 
-      expect(getGapVars(screen.getByTestId(DATA_COMPONENT_TEST_ID))).toEqual({
+      expect(getGaps(screen.getByTestId(DATA_COMPONENT_TEST_ID))).toEqual({
         x: '16px',
         y: '16px',
       });
@@ -116,7 +111,7 @@ describe('Flex', () => {
     it('should override gap with gapX and gapY', () => {
       renderFlex({ gap: '2', gapX: '1', gapY: '6' });
 
-      expect(getGapVars(screen.getByTestId(DATA_COMPONENT_TEST_ID))).toEqual({
+      expect(getGaps(screen.getByTestId(DATA_COMPONENT_TEST_ID))).toEqual({
         x: '4px',
         y: '24px',
       });
@@ -135,8 +130,8 @@ describe('Flex', () => {
 
       expect(element.tagName).toBe('UL');
       expect(container.firstChild).toBe(element);
-      expect(element).toHaveClass('flex', 'direction_column');
-      expect(getGapVars(element).x).toBe('4px');
+      expect(element.style.flexDirection).toBe('column');
+      expect(getGaps(element).x).toBe('4px');
     });
 
     it('should merge className and style with the child ones', () => {
@@ -157,8 +152,8 @@ describe('Flex', () => {
 
       const element = screen.getByTestId(DATA_COMPONENT_TEST_ID);
 
-      expect(element).toHaveClass('flex', 'flex-class', 'child-class');
-      expect(getGapVars(element).x).toBe('8px');
+      expect(element).toHaveClass('flex-class', 'child-class');
+      expect(getGaps(element).x).toBe('8px');
       expect(element.style.color).toBe('blue');
       expect(element.style.margin).toBe('0px');
     });
