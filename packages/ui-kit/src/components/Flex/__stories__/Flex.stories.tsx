@@ -89,7 +89,6 @@ const meta = {
     gapY: { control: 'select', options: Object.keys(SPACING_SCALE) },
   },
   args: {
-    wrap: 'wrap',
     gap: '2',
   },
   render: (props) => (
