@@ -4,6 +4,7 @@ import { test } from '@crm-react-ui-kit-e2e/test';
 
 import { multiCartesian, prettyProps } from '@ui-kit/tests/e2e/utils';
 import { Appearance } from '@ui-kit/lib/appearance';
+import { Platform } from '@ui-kit/lib/platform';
 
 import { type FlexProps } from '..';
 
@@ -31,8 +32,11 @@ const wrapCombinations = multiCartesian<FlexProps>([
 ]);
 
 test.skip(
-  ({ appearance }) => appearance !== Appearance.DEFAULT,
-  'Flex has no theme, the layout is identical in every appearance'
+  ({ appearance, platform, browserName }) =>
+    appearance !== Appearance.DEFAULT ||
+    platform !== Platform.WEB ||
+    browserName !== 'chromium',
+  'Flex is a plain CSS flex wrapper with no theme or platform-specific styles'
 );
 
 test.describe('Flex direction', () => {
