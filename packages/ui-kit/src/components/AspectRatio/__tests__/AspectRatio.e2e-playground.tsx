@@ -1,6 +1,6 @@
 import React from 'react';
 
-import forestImage from '@storybook-utils/img/forest.jpg';
+import redImage from '@storybook-utils/img/red.png';
 
 import {
   ComponentPlayground,
@@ -33,7 +33,7 @@ export const AspectRatioPlaygroundItem = ({
         return (
           <div style={CONTAINER_STYLE}>
             <AspectRatio {...p}>
-              <img src={forestImage} alt="Forest" style={IMAGE_STYLE} />
+              <img src={redImage} alt="Red" style={IMAGE_STYLE} />
             </AspectRatio>
           </div>
         );

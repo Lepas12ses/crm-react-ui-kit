@@ -2,7 +2,7 @@ import React from 'react';
 import type { Meta, StoryObj } from '@storybook/react';
 
 import { CanvasCentered } from '@storybook-utils/constants';
-import forestImage from '@storybook-utils/img/forest.jpg';
+import redImage from '@storybook-utils/img/red.png';
 
 import { AspectRatio } from '..';
 
@@ -58,7 +58,7 @@ const meta = {
   },
   args: {
     ratio: 16 / 9,
-    children: <img src={forestImage} alt="Forest" style={IMAGE_STYLE} />,
+    children: <img src={redImage} alt="Red" style={IMAGE_STYLE} />,
   },
   render: (props) => {
     return (
