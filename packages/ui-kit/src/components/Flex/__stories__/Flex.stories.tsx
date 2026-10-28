@@ -12,7 +12,7 @@ import { Flex } from '@kommo-crm/crm-react-ui-kit/Flex';
 
 function App() {
   return (
-    <Flex wrap="wrap" gap="2">
+    <Flex gap="2">
       <div>1</div>
       <div>2</div>
       <div>3</div>
