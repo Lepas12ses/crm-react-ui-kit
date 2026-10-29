@@ -36,13 +36,26 @@ const ITEM_STYLE: React.CSSProperties = {
   justifyContent: 'center',
 };
 
+const CONTAINER_MAX_WIDTH = 480;
+const CONTAINER_MAX_HEIGHT = 240;
+
+/**
+ * A centered container grows to both sides from the center, so its resize
+ * handle moves at half the cursor speed. The fixed frame stays centered
+ * instead, and the container grows from its top left corner.
+ */
+const FRAME_STYLE: React.CSSProperties = {
+  width: CONTAINER_MAX_WIDTH,
+  height: CONTAINER_MAX_HEIGHT,
+};
+
 const CONTAINER_STYLE: React.CSSProperties = {
   width: 320,
   height: 160,
   minWidth: 60,
   minHeight: 60,
-  maxWidth: 640,
-  maxHeight: 480,
+  maxWidth: CONTAINER_MAX_WIDTH,
+  maxHeight: CONTAINER_MAX_HEIGHT,
   resize: 'both',
   overflow: 'auto',
   outline: '1px dashed var(--crm-ui-kit-palette-border-default)',
@@ -92,9 +105,11 @@ const meta = {
     gap: '2',
   },
   render: (props) => (
-    <Flex {...props} style={CONTAINER_STYLE}>
-      <Items />
-    </Flex>
+    <div style={FRAME_STYLE}>
+      <Flex {...props} style={CONTAINER_STYLE}>
+        <Items />
+      </Flex>
+    </div>
   ),
 } satisfies Meta<typeof Flex>;
 
