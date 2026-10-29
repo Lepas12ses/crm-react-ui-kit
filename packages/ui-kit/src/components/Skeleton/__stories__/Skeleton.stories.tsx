@@ -49,7 +49,11 @@ const meta = {
       mapping: themeMap,
     },
     width: { control: 'text' },
+    minWidth: { control: 'text' },
+    maxWidth: { control: 'text' },
     height: { control: 'text' },
+    minHeight: { control: 'text' },
+    maxHeight: { control: 'text' },
     children: { control: false },
   },
   args: {

@@ -17,7 +17,11 @@ export const Skeleton = forwardRef<HTMLSpanElement, SkeletonProps>(
     const {
       isLoading = true,
       width,
+      minWidth,
+      maxWidth,
       height,
+      minHeight,
+      maxHeight,
       className,
       style,
       theme,
@@ -37,7 +41,11 @@ export const Skeleton = forwardRef<HTMLSpanElement, SkeletonProps>(
 
     const rootStyle: React.CSSProperties = {
       width,
+      minWidth,
+      maxWidth,
       height,
+      minHeight,
+      maxHeight,
       ...style,
     };
 

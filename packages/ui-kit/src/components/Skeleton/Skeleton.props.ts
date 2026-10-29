@@ -15,9 +15,25 @@ interface SkeletonOwnProps {
    */
   width?: string;
   /**
+   * Minimum placeholder width, any CSS length.
+   */
+  minWidth?: string;
+  /**
+   * Maximum placeholder width, any CSS length.
+   */
+  maxWidth?: string;
+  /**
    * Placeholder height, any CSS length, e.g. `16px` or `1rem`.
    */
   height?: string;
+  /**
+   * Minimum placeholder height, any CSS length.
+   */
+  minHeight?: string;
+  /**
+   * Maximum placeholder height, any CSS length.
+   */
+  maxHeight?: string;
   /**
    * Content whose size the placeholder repeats.
    *

@@ -32,6 +32,26 @@ describe('Skeleton', () => {
     expect(element.style.height).toBe('1rem');
   });
 
+  it('should set the min and max size props as styles', () => {
+    render(
+      <Skeleton
+        theme={SkeletonPrimaryTheme}
+        minWidth="60px"
+        maxWidth="50%"
+        minHeight="1rem"
+        maxHeight="40px"
+        data-testid={DATA_COMPONENT_TEST_ID}
+      />
+    );
+
+    expect(screen.getByTestId(DATA_COMPONENT_TEST_ID)).toHaveStyle({
+      minWidth: '60px',
+      maxWidth: '50%',
+      minHeight: '1rem',
+      maxHeight: '40px',
+    });
+  });
+
   it('should render the child element as the root without a wrapper', () => {
     const ref = createRef<HTMLElement>();
 
