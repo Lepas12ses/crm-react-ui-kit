@@ -12,8 +12,12 @@ import {
   type ProgressBarTheme,
 } from '..';
 
-const ROOT_STYLE: React.CSSProperties = {
-  width: 200,
+const CONTAINER_STYLE: React.CSSProperties = {
+  width: 300,
+  padding: 16,
+  background: 'var(--crm-ui-kit-palette-background-primary)',
+  border: '1px solid var(--crm-ui-kit-palette-border-primary)',
+  borderRadius: 4,
 };
 
 const createPlaygroundItem = (theme: ProgressBarTheme) => {
@@ -26,9 +30,11 @@ const createPlaygroundItem = (theme: ProgressBarTheme) => {
       props={props}
     >
       {(p) => (
-        <ProgressBar.Root {...p} theme={theme} style={ROOT_STYLE}>
-          <ProgressBar.Indicator />
-        </ProgressBar.Root>
+        <div style={CONTAINER_STYLE}>
+          <ProgressBar.Root {...p} theme={theme}>
+            <ProgressBar.Indicator />
+          </ProgressBar.Root>
+        </div>
       )}
     </ComponentPlayground>
   );
