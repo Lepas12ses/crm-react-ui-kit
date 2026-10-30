@@ -43,6 +43,7 @@ const meta = {
   },
   component: Skeleton,
   argTypes: {
+    as: { control: 'inline-radio', options: ['div', 'span'] },
     theme: {
       control: 'select',
       options: Object.keys(themeMap),
@@ -91,12 +92,12 @@ type Story = StoryObj<typeof meta>;
 
 export const Default: Story = {};
 
-type ElementStory = StoryObj<SkeletonProps & { text: string }>;
+type ElementStory = StoryObj<
+  Extract<SkeletonProps, { as?: 'div' }> & { text: string }
+>;
 
 export const WithElement: ElementStory = {
   argTypes: {
-    width: { table: { disable: true } },
-    height: { table: { disable: true } },
     text: { control: 'text' },
   },
   args: {

@@ -14,7 +14,7 @@ import {
 
 /**
  * A plain element with its own background, border, shadow and radius,
- * so the screenshot shows the placeholder replacing them.
+ * so the screenshot shows the placeholder covering them.
  */
 const ELEMENT_STYLE: React.CSSProperties = {
   padding: '8px 16px',
@@ -54,7 +54,7 @@ export const SkeletonElementPlaygroundItem = ({
     <ComponentPlayground<SkeletonProps> appearance={appearance} props={props}>
       {(p) => {
         return (
-          <Skeleton {...p} theme={SkeletonPrimaryTheme}>
+          <Skeleton width="max-content" {...p} theme={SkeletonPrimaryTheme}>
             <button style={ELEMENT_STYLE}>Submit</button>
           </Skeleton>
         );

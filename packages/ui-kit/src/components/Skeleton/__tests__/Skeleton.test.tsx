@@ -1,5 +1,6 @@
 import React, { createRef } from 'react';
 import { render, screen } from '@testing-library/react';
+import userEvent from '@testing-library/user-event';
 
 import { Skeleton, SkeletonPrimaryTheme } from '..';
 
@@ -13,7 +14,7 @@ describe('Skeleton', () => {
     expect(Skeleton).toBeDefined();
   });
 
-  it('should render an empty block span with width and height', () => {
+  it('should render an empty div with width and height', () => {
     render(
       <Skeleton
         theme={SkeletonPrimaryTheme}
@@ -25,11 +26,27 @@ describe('Skeleton', () => {
 
     const element = screen.getByTestId(DATA_COMPONENT_TEST_ID);
 
-    expect(element.tagName).toBe('SPAN');
-    expect(element).toBeEmptyDOMElement();
-    expect(element).toHaveClass('empty');
+    expect(element.tagName).toBe('DIV');
+    expect(element.childNodes).toHaveLength(1);
+    expect(element.firstElementChild).toHaveClass('layer');
+    expect(element).toHaveClass('skeleton');
     expect(element.style.width).toBe('120px');
     expect(element.style.height).toBe('1rem');
+  });
+
+  it('should render a span with the inline class when as is span', () => {
+    render(
+      <Skeleton
+        as="span"
+        theme={SkeletonPrimaryTheme}
+        data-testid={DATA_COMPONENT_TEST_ID}
+      />
+    );
+
+    const element = screen.getByTestId(DATA_COMPONENT_TEST_ID);
+
+    expect(element.tagName).toBe('SPAN');
+    expect(element).toHaveClass('inline');
   });
 
   it('should set the min and max size props as styles', () => {
@@ -52,73 +69,71 @@ describe('Skeleton', () => {
     });
   });
 
-  it('should render the child element as the root without a wrapper', () => {
-    const ref = createRef<HTMLElement>();
-
-    const { container } = render(
+  it('should wrap children and hide them from assistive technologies', () => {
+    render(
       <Skeleton
         theme={SkeletonPrimaryTheme}
-        ref={ref}
-        className="skeleton-class"
-        style={{ color: 'red' }}
-        width="100px"
+        data-testid={DATA_COMPONENT_TEST_ID}
       >
-        <button
-          type="button"
-          data-testid={DATA_CHILDREN_TEST_ID}
-          className="child-class"
-          style={{ width: 50 }}
-        >
-          Submit
-        </button>
+        <>
+          <button type="button">Save</button>
+          Text
+        </>
       </Skeleton>
     );
 
-    const element = screen.getByTestId(DATA_CHILDREN_TEST_ID);
+    const element = screen.getByTestId(DATA_COMPONENT_TEST_ID);
 
-    expect(container.firstChild).toBe(element);
-    expect(ref.current).toBe(element);
-    expect(element).toHaveClass('skeleton-class', 'child-class');
-    expect(element).not.toHaveClass('empty');
-    expect(element.style.color).toBe('red');
-    expect(element.style.width).toBe('50px');
+    expect(element).toHaveAttribute('aria-hidden', 'true');
+    expect(element).toHaveClass('skeleton');
+    expect(element.firstElementChild).toHaveClass('layer');
+    expect(element).toHaveTextContent('SaveText');
+    expect(screen.queryByRole('button')).not.toBeInTheDocument();
   });
 
-  it('should render only children when not loading', () => {
-    const { container } = render(
+  it('should show children and keep the size without placeholder props when not loading', () => {
+    render(
       <Skeleton
         theme={SkeletonPrimaryTheme}
         isLoading={false}
-        className="skeleton-class"
+        className="my-class"
+        width="100px"
         data-testid={DATA_COMPONENT_TEST_ID}
       >
         <p data-testid={DATA_CHILDREN_TEST_ID}>Content</p>
       </Skeleton>
     );
 
-    const element = screen.getByTestId(DATA_CHILDREN_TEST_ID);
+    const element = screen.getByTestId(DATA_COMPONENT_TEST_ID);
 
-    expect(container.firstChild).toBe(element);
-    expect(
-      screen.queryByTestId(DATA_COMPONENT_TEST_ID)
-    ).not.toBeInTheDocument();
-    expect(element).not.toHaveClass('skeleton-class');
+    expect(element).toContainElement(screen.getByTestId(DATA_CHILDREN_TEST_ID));
+    expect(element).toHaveClass('my-class');
+    expect(element).not.toHaveClass('skeleton');
+    expect(element.firstElementChild).toBe(
+      screen.getByTestId(DATA_CHILDREN_TEST_ID)
+    );
     expect(element).not.toHaveAttribute('aria-hidden');
+    expect(element.style.width).toBe('100px');
   });
 
-  it('should hide the root from assistive technologies and Tab navigation', () => {
-    render(
-      <Skeleton theme={SkeletonPrimaryTheme}>
-        <button type="button" data-testid={DATA_CHILDREN_TEST_ID}>
-          Submit
-        </button>
+  it('should keep children mounted when isLoading toggles', async () => {
+    const renderSkeleton = (isLoading: boolean) => (
+      <Skeleton theme={SkeletonPrimaryTheme} isLoading={isLoading}>
+        <input aria-label="Name" />
       </Skeleton>
     );
 
-    const element = screen.getByTestId(DATA_CHILDREN_TEST_ID);
+    const { rerender } = render(renderSkeleton(false));
 
-    expect(element).toHaveAttribute('aria-hidden', 'true');
-    expect(element).toHaveAttribute('tabindex', '-1');
+    const input = screen.getByRole('textbox');
+
+    await userEvent.type(input, 'John');
+
+    rerender(renderSkeleton(true));
+    rerender(renderSkeleton(false));
+
+    expect(screen.getByRole('textbox')).toBe(input);
+    expect(input).toHaveValue('John');
   });
 
   it('should pass className, style and ref to the root', () => {

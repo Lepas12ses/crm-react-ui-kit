@@ -4,57 +4,72 @@ import { type SkeletonTheme } from './Skeleton.themes';
 
 interface SkeletonOwnProps {
   /**
-   * Shows the placeholder. When `false`, only `children` are rendered,
-   * without any wrapper.
+   * Shows the placeholder over `children`. When `false`, the wrapper stays
+   * in place with its size and `children` are shown as is.
    *
    * @default true
    */
   isLoading?: boolean;
   /**
-   * Placeholder width, any CSS length, e.g. `120px` or `50%`.
+   * Wrapper width, any CSS length, e.g. `120px` or `50%`.
    */
   width?: string;
   /**
-   * Minimum placeholder width, any CSS length.
+   * Minimum wrapper width, any CSS length.
    */
   minWidth?: string;
   /**
-   * Maximum placeholder width, any CSS length.
+   * Maximum wrapper width, any CSS length.
    */
   maxWidth?: string;
   /**
-   * Placeholder height, any CSS length, e.g. `16px` or `1rem`.
+   * Wrapper height, any CSS length, e.g. `16px` or `1rem`.
    */
   height?: string;
   /**
-   * Minimum placeholder height, any CSS length.
+   * Minimum wrapper height, any CSS length.
    */
   minHeight?: string;
   /**
-   * Maximum placeholder height, any CSS length.
+   * Maximum wrapper height, any CSS length.
    */
   maxHeight?: string;
   /**
-   * Content whose size the placeholder repeats.
-   *
-   * - **None** - an empty block placeholder sized by `width`, `height`
-   *   or `className`.
-   * - **React element** - the element itself becomes the placeholder,
-   *   without a wrapper. Classes, `style`, `ref` and attributes are merged
-   *   with the element's ones; the element's `style` and `tabIndex` win.
-   *   The element's background, border, shadow and border radius are
-   *   replaced by the placeholder ones. An element with its own `tabIndex`
-   *   stays reachable by Tab. `ref` is typed as `HTMLSpanElement` but
-   *   points to the element, e.g. `HTMLButtonElement` for `<button>`.
+   * Content inside the wrapper. While loading it keeps taking up space in
+   * the wrapper and is hidden from view, assistive technologies and Tab
+   * navigation, but stays mounted and is not disabled: Enter in another
+   * field of the form still submits it through a submit button inside,
+   * and an outside `<label for>` still toggles a control inside. Disable
+   * such controls while loading if this matters. Without `children` the
+   * placeholder is sized by `width`, `height` or `className`.
    */
-  children?: React.ReactElement;
+  children?: React.ReactNode;
   /**
-   * Object with CSS properties of the theme. The border radius applies in
-   * all modes.
+   * Object with CSS properties of the theme.
    */
   theme: SkeletonTheme;
 }
 
-export interface SkeletonProps
+interface SkeletonDivProps
   extends SkeletonOwnProps,
-    Omit<React.ComponentPropsWithoutRef<'span'>, keyof SkeletonOwnProps> {}
+    Omit<React.ComponentPropsWithoutRef<'div'>, keyof SkeletonOwnProps> {
+  /**
+   * Wrapper tag: `div` is a block, `span` is an inline block. Use `span`
+   * inside phrasing content, e.g. in a `p`.
+   *
+   * @default 'div'
+   */
+  as?: 'div';
+}
+
+interface SkeletonSpanProps
+  extends SkeletonOwnProps,
+    Omit<React.ComponentPropsWithoutRef<'span'>, keyof SkeletonOwnProps> {
+  /**
+   * Wrapper tag: `div` is a block, `span` is an inline block. Use `span`
+   * inside phrasing content, e.g. in a `p`.
+   */
+  as: 'span';
+}
+
+export type SkeletonProps = SkeletonDivProps | SkeletonSpanProps;

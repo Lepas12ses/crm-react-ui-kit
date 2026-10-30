@@ -1,47 +1,62 @@
 @keyframes skeletonAnimation {
   0% {
-    background-position: -438px 0;
+    transform: translateX(0);
   }
 
   100% {
-    background-position: 362px 0;
+    transform: translateX(800px);
   }
 }
 
+.inline {
+  display: inline-block;
+}
+
 /*
- * `!important` keeps the element's own class styles from showing through
- * the placeholder. No `background` shorthand: it would pin
- * `background-position` with `!important`, and keyframes cannot override
- * important declarations.
+ * `visibility: hidden` hides the content, takes it out of Tab navigation
+ * and the accessibility tree; the placeholder layer turns visibility back on.
  */
 .skeleton {
-  color: transparent !important;
-  background-color: transparent !important;
-  background-image: var(--crm-ui-kit-skeleton-background) !important;
-  background-size: 800px 100% !important;
-  background-clip: border-box !important;
-  border-color: transparent !important;
-  border-radius: var(--crm-ui-kit-skeleton-border-radius) !important;
-  box-shadow: none !important;
-  outline: none !important;
-  cursor: default !important;
-  pointer-events: none !important;
-  user-select: none !important;
-  animation: skeletonAnimation 1.5s linear infinite !important;
+  position: relative;
+  isolation: isolate;
+  visibility: hidden;
+  pointer-events: none;
 }
 
-.skeleton > *,
-.skeleton::before,
-.skeleton::after {
-  visibility: hidden !important;
+/*
+ * Clipping lives on this layer, not on the wrapper: `overflow: hidden` there
+ * would move an inline-block's baseline and keep children margins from
+ * collapsing, so the wrapper would change size when loading ends.
+ */
+.layer {
+  position: absolute;
+  z-index: 1;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  overflow: hidden;
+  border-radius: var(--crm-ui-kit-skeleton-border-radius);
+  visibility: visible;
 }
 
-.empty {
-  display: block;
+.layer::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: -800px;
+  right: 0;
+  background-image: var(--crm-ui-kit-skeleton-background);
+  background-position: 362px 0;
+  background-size: 800px 100%;
+  forced-color-adjust: none;
+  animation: skeletonAnimation 1.5s linear infinite;
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .skeleton {
-    animation: none !important;
+  .layer::before {
+    background-position: 0 0;
+    animation: none;
   }
 }
